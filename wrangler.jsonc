@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "flaredrop-media-cdnsgrg",
+  "main": "src/server/app.ts",
+  "compatibility_date": "2026-03-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // Automatically execute the Worker first so /cdn/*, /media/*, and /api/* are never overridden by static HTML
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "observability": {
+    "enabled": true
+  },
+  // Cloudflare D1 Serverless SQL Database - 100% Free Tier (NO Credit Card Required!)
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "flaredrop_cdn_db",
+      "database_id": "1b105d93-bb30-4220-a246-115be0d622b5"
+    }
+  ],
+  // Pre-configured environment variables and security tokens
+  "vars": {
+    "WSRV_ENDPOINT": "https://wsrv.nl/",
+    "DEFAULT_QUALITY": "80",
+    "DEFAULT_FORMAT": "webp",
+    "CACHE_MAX_AGE": "31536000",
+    "CORS_ORIGIN": "*"
+  }
+}
